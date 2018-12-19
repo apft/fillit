@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 15:25:12 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/19 17:32:12 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,19 @@ typedef struct	s_parser
 
 typedef struct	s_tile
 {
-	char	line0 : 4;
-	char	line1 : 4;
-	char	line2 : 4;
-	char	line3 : 4;
+	unsigned short	line0;
+	unsigned short	line1;
+	unsigned short	line2;
+	unsigned short	line3;
 }				t_tile;
+
+static void	dbg_print_nbr(const char *str, const int n)
+{
+	ft_putstr(str);
+	ft_putstr(": ");
+	ft_putnbr(n);
+	ft_putendl(0);
+}
 
 static void	bw_print(unsigned short n)
 {
@@ -37,7 +45,52 @@ static void	bw_print(unsigned short n)
 	ft_putendl(0);
 }
 
-static int	extract_tile(unsigned short tmp)
+static void	print_tiles(t_tile *tiles)
+{
+	char	i;
+
+	i = 0;
+	while (i < 26)
+	{
+		ft_putstr("========== ");
+		ft_putnbr(i);
+		ft_putstr(" ==========");
+		ft_putstr("\nline0: ");
+		if (tiles[i].line0 < 32768)
+			ft_putnbr(0);
+		ft_putnbr_base(tiles[i].line0, "01");
+		ft_putstr("\nline1: ");
+		if (tiles[i].line1 < 32768)
+			ft_putnbr(0);
+		ft_putnbr_base(tiles[i].line1, "01");
+		ft_putstr("\nline2: ");
+		if (tiles[i].line2 < 32768)
+			ft_putnbr(0);
+		ft_putnbr_base(tiles[i].line2, "01");
+		ft_putstr("\nline3: ");
+		if (tiles[i].line3 < 32768)
+			ft_putnbr(0);
+		ft_putnbr_base(tiles[i].line3, "01");
+		ft_putendl(0);
+		i++;
+	}
+}
+
+static int	create_tile(t_tile *tetrimino, char i, t_parser *tiles)
+{
+	unsigned short	tile;
+
+	tile = tiles[i].tile;
+	ft_putnbr_base(tile, "01");
+	ft_putendl(0);
+	tetrimino->line0 = (tile >> 12) << 12;
+	tetrimino->line1 = ((tile << 4) >> 12) << 12;
+	tetrimino->line2 = ((tile << 8) >> 12) << 12;
+	tetrimino->line3 = tile << 12;
+	return (0);
+}
+
+static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
 {
 	static t_parser		tiles[] =
 	{
@@ -68,41 +121,24 @@ static int	extract_tile(unsigned short tmp)
 	unsigned char	bit;
 
 	i = -1;
-	bw_print(tmp);
 	if (!tmp)
 		return (0);
 	while (++i < 19)
 	{
-		ft_putnbr(i);
-		ft_putstr(": ");
 		tile = tiles[i].tile;
 		shift = tiles[i].shift;
 		if (tmp == (tile))
-		{
-			ft_putstr("found tile ");
-			ft_putnbr(i);
-			ft_putendl(0);
-			return (0);
-		}
+			return (create_tile(tetrimino, i, tiles));
 		j = -1;
 		while (++j <= 12)
 		{
-			bit = (shift >> (16 - j)) & 1;
-			if (bit)
+			if (((shift >> (16 - j)) & 1) && tmp == (tile >> j))
 			{
-				if (tmp == (tile >> j))
-				{
-					ft_putstr("found tile ");
-					ft_putnbr(i);
-					ft_putendl(0);
-					return (0);
-				}
+				dbg_print_nbr("j", j);
+				return (create_tile(tetrimino, i, tiles));
 			}
 		}
-		ft_putendl(0);
 	}
-
-
 	return (1);
 }
 
@@ -112,10 +148,13 @@ int			main(int argc, char **argv)
 	int		r;
 	char	buff[SIZE + 1];
 	int		i;
+	int		j;
 	unsigned short	tmp;
-	int		error;
+	char		error;
+	static t_tile	tiles[26];
 
 
+	ft_putnbr(sizeof(tiles));
 	if (argc == 1)
 		fd = 0;
 	else
@@ -124,27 +163,27 @@ int			main(int argc, char **argv)
 		return (1);
 	r = read(fd, buff, SIZE);
 	buff[r] = 0;
-	ft_putendl(buff);
+	dbg_print_nbr("r", r);
 	i = 0;
 	error = 0;
 	tmp = ~0;
+	j = 0;
 	while (!error && i < r)
 	{
-		if (i % 21 == 0 && (error = extract_tile(~tmp)) == 0)
+		if (i > 0 && i % 21 == 0 && !(error = extract_tile(~tmp, &tiles[j++])))
 			tmp = ~0;
-		if (i % 21 < 20 && i % 5 < 4 && buff[i] != '.' && buff[i] != '#')
-			error = 1;
-		else if (i % 21 < 20 && i % 5 < 4 && buff[i] == '#')
+		if (i % 21 < 20 && ((i - j) % 5) < 4 && buff[i] != '.' && buff[i] != '#')
+			error = 2;
+		else if (i % 21 < 20 && ((i - j) % 5) < 4 && buff[i] == '#')
 			tmp ^= 1 << (15 - (i % 21) + ((i % 21) / 5));
-		if (i % 21 < 20 && i % 5 == 4 && buff[i] != '\n')
-			error = 1;
+		if (i % 21 < 20 && ((i - j) % 5) == 4 && buff[i] != '\n')
+			error = 3;
 		if (i % 21 == 20 && buff[i] != '\n')
-			error = 1;
+			error = 4;
 		i++;
 	}
-	error = extract_tile(~tmp);
-	ft_putstr("error: ");
-	ft_putnbr(error);
-	ft_putendl(0);
+	if (!error && !(error = extract_tile(~tmp, &tiles[j])))
+		print_tiles(tiles);
+	dbg_print_nbr("error", error);
 	return (0);
 }
