@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 15:11:31 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/19 15:25:12 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	bw_print(unsigned short n)
 	ft_putendl(0);
 }
 
-static int	extract_tile(short tmp)
+static int	extract_tile(unsigned short tmp)
 {
 	static t_parser		tiles[] =
 	{
@@ -68,7 +68,6 @@ static int	extract_tile(short tmp)
 	unsigned char	bit;
 
 	i = -1;
-	ft_putnbr_base(2184 >> 4, "01");
 	bw_print(tmp);
 	if (!tmp)
 		return (0);
@@ -78,14 +77,26 @@ static int	extract_tile(short tmp)
 		ft_putstr(": ");
 		tile = tiles[i].tile;
 		shift = tiles[i].shift;
+		if (tmp == (tile))
+		{
+			ft_putstr("found tile ");
+			ft_putnbr(i);
+			ft_putendl(0);
+			return (0);
+		}
 		j = -1;
 		while (++j <= 12)
 		{
 			bit = (shift >> (16 - j)) & 1;
 			if (bit)
 			{
-				ft_putnbr(j);
-				ft_putchar(' ');
+				if (tmp == (tile >> j))
+				{
+					ft_putstr("found tile ");
+					ft_putnbr(i);
+					ft_putendl(0);
+					return (0);
+				}
 			}
 		}
 		ft_putendl(0);
@@ -131,7 +142,7 @@ int			main(int argc, char **argv)
 			error = 1;
 		i++;
 	}
-	extract_tile(~tmp);
+	error = extract_tile(~tmp);
 	ft_putstr("error: ");
 	ft_putnbr(error);
 	ft_putendl(0);
