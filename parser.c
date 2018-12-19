@@ -6,13 +6,26 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 19:00:11 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/19 20:00:46 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "parser.h"
 #include "dbg_utils.h"
+
+static int	active_bit(unsigned short v)
+{
+	unsigned char	c;
+
+	c = 0;
+	while (v)
+	{
+		v &= v - 1;
+		c++;
+	}
+	return (c);
+}
 
 static int	create_tile(t_tile *tetrimino, char i, t_parser *tiles)
 {
@@ -55,9 +68,9 @@ static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
 		{19968, 39296}	// 0100111000000000 1001100110000000
 	};
 
+	if (!tmp || active_bit(tmp) != 4)
+		return (1);
 	i = -1;
-	if (!tmp)
-		return (0);
 	while (++i < 19)
 	{
 		tile = tiles[i].tile;
@@ -82,7 +95,7 @@ int			parser(t_tile *tiles, int *k, const int fd)
 	char			err;
 	unsigned short	tmp;
 
-	if ((r = read(fd, buf, SIZE)) < 0)
+	if ((r = read(fd, buf, SIZE)) < 0 || r > MAP_MAX)
 		return (-1);
 	buf[r] = 0;
 	tmp = ~0;
@@ -101,5 +114,8 @@ int			parser(t_tile *tiles, int *k, const int fd)
 		if (i % 21 == 20 && buf[i] != '\n')
 			return (4);
 	}
-	return (err);
+//	if (!err && i >= 20)
+//		err = extract_tile(~tmp, &tiles[(*k)++]);
+//	return (err);
+	return (err || i < 20 || !(r % 21) || extract_tile(~tmp, &tiles[(*k)++]));
 }
