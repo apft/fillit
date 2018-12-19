@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 14:46:03 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/19 14:51:00 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	s_tile
 	char	line3 : 4;
 }				t_tile;
 
-static void	bw_print(short n)
+static void	bw_print(unsigned short n)
 {
 	ft_putstr("dec: ");
 	ft_putnbr(n);
