@@ -11,10 +11,10 @@ do
 	shif=$(echo $i | cut -d ' ' -f4)
 	for j in $tile $shif
 	do
-		n=$j
-		sign=${n:0:1}
-		[ $sign -eq 1 ] && num=${n:1} || num=${n:0}
-		num=$((2#$num))
+		num=$((2#$j))
+		#sign=${n:0:1}
+		#[ $sign -eq 1 ] && num=${n:1} || num=${n:0}
+		#num=$((2#$num))
 		#[ $sign -eq 1 ] && num=$(($num-32768))
 		echo "$j : $num"
 	done
