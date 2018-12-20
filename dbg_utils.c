@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:20:30 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 18:55:22 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 12:18:43 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	dbg_print_nbr(const char *str, const int n)
 	ft_putendl(0);
 }
 
-void	dbg_print_dec(const unsigned short n)
+void	dbg_print_bin(const unsigned short n)
 {
 	ft_putstr("dec: ");
 	ft_putnbr(n);
