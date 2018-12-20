@@ -6,11 +6,22 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:20:30 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 12:18:43 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 15:34:47 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbg_utils.h"
+
+void	print_bits(unsigned short nb)
+{
+	unsigned long	count;
+	unsigned short	mask;
+
+	count = sizeof(nb) * 8;
+	mask = 1 << (sizeof(nb) * 8 - 1);
+	while (count-- > 0) 
+		write (1, (mask >> (15 - count) & nb) ? "1" : "0", 1);
+}
 
 void	dbg_print_nbr(const char *str, const int n)
 {
@@ -32,30 +43,22 @@ void	dbg_print_bin(const unsigned short n)
 void	dbg_print_tiles(const t_tile *tiles, const int k)
 {
 	char	i;
+	char	j;
 
-	i = 0;
-	while (i < k)
+	i = -1;
+	while (++i < k)
 	{
 		ft_putstr("========== ");
 		ft_putnbr(i);
 		ft_putstr(" ==========");
-		ft_putstr("\nline0: ");
-		if (tiles[i].line0 < 32768)
-			ft_putnbr(0);
-		ft_putnbr_base(tiles[i].line0, "01");
-		ft_putstr("\nline1: ");
-		if (tiles[i].line1 < 32768)
-			ft_putnbr(0);
-		ft_putnbr_base(tiles[i].line1, "01");
-		ft_putstr("\nline2: ");
-		if (tiles[i].line2 < 32768)
-			ft_putnbr(0);
-		ft_putnbr_base(tiles[i].line2, "01");
-		ft_putstr("\nline3: ");
-		if (tiles[i].line3 < 32768)
-			ft_putnbr(0);
-		ft_putnbr_base(tiles[i].line3, "01");
+		j = -1;
+		while (++j < 4)
+		{
+			ft_putstr("\nline");
+			ft_putnbr(j);
+			ft_putstr(": ");
+			print_bits(tiles[i].lines[j]);
+		}
 		ft_putendl(0);
-		i++;
 	}
 }
