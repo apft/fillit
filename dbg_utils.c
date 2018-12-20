@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:20:30 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 14:26:42 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:34:47 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ void	dbg_print_bin(const unsigned short n)
 void	dbg_print_tiles(const t_tile *tiles, const int k)
 {
 	char	i;
+	char	j;
 
-	i = 0;
-	while (i < k)
+	i = -1;
+	while (++i < k)
 	{
 		ft_putstr("========== ");
 		ft_putnbr(i);
 		ft_putstr(" ==========");
-		ft_putstr("\nline0: ");
-		print_bits(tiles[i].line0);
-		ft_putstr("\nline1: ");
-		print_bits(tiles[i].line1);
-		ft_putstr("\nline2: ");
-		print_bits(tiles[i].line2);
-		ft_putstr("\nline3: ");
-		print_bits(tiles[i].line3);
+		j = -1;
+		while (++j < 4)
+		{
+			ft_putstr("\nline");
+			ft_putnbr(j);
+			ft_putstr(": ");
+			print_bits(tiles[i].lines[j]);
+		}
 		ft_putendl(0);
-		i++;
 	}
 }
