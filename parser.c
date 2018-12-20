@@ -6,26 +6,14 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 15:26:23 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 16:00:27 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "utils.h"
 #include "parser.h"
 #include "dbg_utils.h"
-
-static int	active_bit(unsigned short v)
-{
-	int		c;
-
-	c = 0;
-	while (v)
-	{
-		v &= v - 1;
-		c++;
-	}
-	return (c);
-}
 
 static int	get_left_col(unsigned short v)
 {
@@ -66,8 +54,8 @@ static int	create_tile(t_tile *tetrimino, unsigned short tile)
 	{
 		tetrimino->lines[i] = ((tile << (4 * i)) >> 12) << 12;
 		tetrimino->height += (tetrimino->lines[i] != 0);
-		if (tetrimino->width < active_bit(tetrimino->lines[i]))
-			tetrimino->width = active_bit(tetrimino->lines[i]);
+		if (tetrimino->width < n_bits_on(tetrimino->lines[i]))
+			tetrimino->width = n_bits_on(tetrimino->lines[i]);
 	}
 	return (0);
 }
@@ -101,7 +89,7 @@ static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
 		0b0100111000000000
 	};
 
-	if (!tmp || active_bit(tmp) != 4)
+	if (!tmp || n_bits_on(tmp) != 4)
 		return (1);
 	i = -1;
 	while (++i < 19)

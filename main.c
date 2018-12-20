@@ -6,13 +6,15 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 19:21:10 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 18:13:53 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "parser.h"
 #include "dbg_utils.h"
+
+int		solver(t_tile *t, int k);
 
 int		main(int ac, char **av)
 {
@@ -28,6 +30,9 @@ int		main(int ac, char **av)
 	ret = parser(tiles, &k, fd);
 	dbg_print_nbr("ret", ret);
 	if (ret == 0)
+	{
 		dbg_print_tiles(tiles, k);
+		solver(tiles, k);
+	}
 	return (0);
 }
