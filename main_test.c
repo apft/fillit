@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jkettani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 18:18:36 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 15:21:30 by jkettani         ###   ########.fr       */
+/*   Created: 2018/12/20 14:54:54 by jkettani          #+#    #+#             */
+/*   Updated: 2018/12/20 14:58:02 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "dbg_utils.h"
 
-typedef struct	s_tile
+int		main(void)
 {
-	unsigned short	lines[4];
-	unsigned int	height;
-	unsigned int	width;
-}				t_tile;
+	unsigned short mask;
 
-#endif
+	mask = ~0;
+	print_bits(mask);
+	return (0);
+}

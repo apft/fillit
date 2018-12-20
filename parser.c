@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 12:22:33 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 15:35:18 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,38 @@ static int	get_top_row(unsigned short v)
 	return (-1);
 }
 
-static int	create_tile(t_tile *tetrimino, unsigned short tile)
+static unsigned int	get_tile_height(t_tile *tetri)
 {
-	tetrimino->line0 = (tile >> 12) << 12;
-	tetrimino->line1 = ((tile << 4) >> 12) << 12;
-	tetrimino->line2 = ((tile << 8) >> 12) << 12;
-	tetrimino->line3 = tile << 12;
+	int	i;
+
+	i = 4;
+	while (i > 0)
+		if ((unsigned short)~0 & tetri.lines[--i])
+			return (++i);
+}
+
+static unsigned int	get_tile_width(t_tile *tetri)
+{
+	int		width;
+
+	width = 1;
+	while (tetri.lines[0] << count || tetri.lines[1] << count || 
+			tetri.line[2] << count || tetri.line[3] << count)
+		width++;
+	return (width);	
+}
+
+static int	create_tile(t_tile *tetri, unsigned short tile)
+{
+	tetri->line0 = (tile >> 12) << 12;
+	tetri->line1 = ((tile << 4) >> 12) << 12;
+	tetri->line2 = ((tile << 8) >> 12) << 12;
+	tetri->line3 = tile << 12;
 	return (0);
 }
 
-static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
+
+static int	extract_tile(unsigned short tmp, t_tile *tetri)
 {
 	char			i;
 	char			j;
@@ -99,7 +121,7 @@ static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
 	while (++i < 19)
 	{
 		if ((tmp << (get_left_col(tmp) + 4 * get_top_row(tmp))) == tiles[i])
-			return (create_tile(tetrimino, tiles[i]));
+			return (create_tile(tetri, tiles[i]));
 	}
 	return (1);
 }
