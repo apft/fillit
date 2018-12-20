@@ -6,7 +6,7 @@
 /*   By: jkettani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 11:54:05 by jkettani          #+#    #+#             */
-/*   Updated: 2018/12/17 18:47:53 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/20 09:16:46 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libft.h"
+
+typedef struct		s_tetri{
+	unsigned int	line1 : 4;
+	unsigned int	line2 : 4;
+	unsigned int	line3 : 4;
+	unsigned int	line4 : 4;
+}					t_tetri;
 
 void		print_bits(size_t const size, void const * const ptr)
 {
@@ -136,6 +143,7 @@ int			main(int argc, char** argv)
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	*tab;
+	t_tetri			tetri1;
 
 	(void)argc;
 	(void)argv;
@@ -157,9 +165,8 @@ int			main(int argc, char** argv)
 	printf("\n");
 	put_bit_zero(~0, 10);
 	printf("\n");
-	tab = (unsigned int*)ft_memalloc(32);
-	tab[7] = ~0;
-	print_bits(32, tab);
+	tetri1.line4 = 1u;
+	print_bits(sizeof(tetri1), &tetri1);
 	ft_memdel((void **)&tab);
 	return (0);
 }
