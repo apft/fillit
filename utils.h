@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:18:36 by apion             #+#    #+#             */
-/*   Updated: 2018/12/19 18:19:25 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 15:27:14 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 
 typedef struct	s_tile
 {
-	unsigned short	line0;
-	unsigned short	line1;
-	unsigned short	line2;
-	unsigned short	line3;
+	unsigned short	lines[4];
+	short			width;
+	short			height;
 }				t_tile;
+
+typedef struct	s_map
+{
+	unsigned short	lines[16];
+	short			n;
+}				t_map;
 
 #endif

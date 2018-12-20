@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 12:22:33 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 15:26:23 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,18 @@ static int	get_top_row(unsigned short v)
 
 static int	create_tile(t_tile *tetrimino, unsigned short tile)
 {
-	tetrimino->line0 = (tile >> 12) << 12;
-	tetrimino->line1 = ((tile << 4) >> 12) << 12;
-	tetrimino->line2 = ((tile << 8) >> 12) << 12;
-	tetrimino->line3 = tile << 12;
+	short	i;
+
+	tetrimino->width = 0;
+	tetrimino->height = 0;
+	i = -1;
+	while (++i < 4)
+	{
+		tetrimino->lines[i] = ((tile << (4 * i)) >> 12) << 12;
+		tetrimino->height += (tetrimino->lines[i] != 0);
+		if (tetrimino->width < active_bit(tetrimino->lines[i]))
+			tetrimino->width = active_bit(tetrimino->lines[i]);
+	}
 	return (0);
 }
 
