@@ -1,0 +1,6 @@
+TO DO:
+
+- print Usage
+- print error message :
+	--> "Could not read ..."
+
