@@ -6,11 +6,11 @@
 #    By: apion <apion@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/19 10:18:24 by apion             #+#    #+#              #
-#    Updated: 2018/12/19 18:47:12 by apion            ###   ########.fr        #
+#    Updated: 2018/12/20 12:44:04 by jkettani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIBFT_PATH		:= $(HOME)/Documents/libft/
+LIBFT_PATH		:= libft/
 LIBFT			:= $(LIBFT_PATH)/libft.a
 
 CINCLUDES		= $(addprefix -I, $(HEADER_PATH))
