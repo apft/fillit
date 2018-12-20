@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:20:30 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 15:34:47 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/20 15:52:45 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ void	dbg_print_tiles(const t_tile *tiles, const int k)
 			print_bits(tiles[i].lines[j]);
 		}
 		ft_putendl(0);
+		dbg_print_nbr("Height", tiles[i].height);
+		dbg_print_nbr("Width", tiles[i].width);
 	}
 }

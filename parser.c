@@ -6,11 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/12/20 15:35:18 by jkettani         ###   ########.fr       */
-=======
-/*   Updated: 2018/12/20 15:26:23 by apion            ###   ########.fr       */
->>>>>>> dev
+/*   Updated: 2018/12/20 15:53:14 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +21,7 @@ static int	active_bit(unsigned short v)
 	c = 0;
 	while (v)
 	{
-		v &= v - 1;
-		c++;
+		v &= v - 1; c++;
 	}
 	return (c);
 }
@@ -59,40 +54,19 @@ static int	get_top_row(unsigned short v)
 	return (-1);
 }
 
-static unsigned int	get_tile_height(t_tile *tetri)
-{
-	int	i;
-
-	i = 4;
-	while (i > 0)
-		if ((unsigned short)~0 & tetri.lines[--i])
-			return (++i);
-}
-
-static unsigned int	get_tile_width(t_tile *tetri)
-{
-	int		width;
-
-	width = 1;
-	while (tetri.lines[0] << count || tetri.lines[1] << count || 
-			tetri.line[2] << count || tetri.line[3] << count)
-		width++;
-	return (width);	
-}
-
 static int	create_tile(t_tile *tetri, unsigned short tile)
 {
 	short	i;
 
-	tetrimino->width = 0;
-	tetrimino->height = 0;
+	tetri->width = 0;
+	tetri->height = 0;
 	i = -1;
 	while (++i < 4)
 	{
-		tetrimino->lines[i] = ((tile << (4 * i)) >> 12) << 12;
-		tetrimino->height += (tetrimino->lines[i] != 0);
-		if (tetrimino->width < active_bit(tetrimino->lines[i]))
-			tetrimino->width = active_bit(tetrimino->lines[i]);
+		tetri->lines[i] = ((tile << (4 * i)) >> 12) << 12;
+		tetri->height += (tetri->lines[i] != 0);
+		if (tetri->width < active_bit(tetri->lines[i]))
+			tetri->width = active_bit(tetri->lines[i]);
 	}
 	return (0);
 }
@@ -164,8 +138,5 @@ int			parser(t_tile *tiles, int *k, const int fd)
 		if (i % 21 == 20 && buf[i] != '\n')
 			return (4);
 	}
-//	if (!err && i >= 20)
-//		err = extract_tile(tmp, &tiles[(*k)++]);
-//	return (err);
 	return (err || i < 20 || !(r % 21) || extract_tile(tmp, &tiles[(*k)++]));
 }
