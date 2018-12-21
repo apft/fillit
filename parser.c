@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 11:03:12 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 11:05:08 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	create_tile(t_tile *tetrimino, unsigned short tile)
 		tetrimino->height += (tetrimino->lines[i] != 0);
 		tetrimino->width |= tetrimino->lines[i];
 	}
-	tetrimino->width = active_bit(tetrimino->width);
+	tetrimino->width = n_bits_on(tetrimino->width);
 	return (0);
 }
 
