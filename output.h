@@ -1,43 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   output.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/20 15:59:47 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 13:54:34 by apion            ###   ########.fr       */
+/*   Created: 2018/12/21 13:48:35 by apion             #+#    #+#             */
+/*   Updated: 2018/12/21 13:55:46 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#ifndef OUTPUT_H
+# define OUTPUT_H
 
-int		n_bits_on(unsigned short v)
-{
-	int		c;
+# include "utils.h"
 
-	c = 0;
-	while (v)
-	{
-		v &= v - 1;
-		c++;
-	}
-	return (c);
-}
+char	*init_str(int n);
+int		set_char(char *str, t_tile *tile, int i, t_map *map);
 
-int		get_width_max(t_tile *tiles, int k)
-{
-	int		max;
-	int		t_max;
-
-	max = 0;
-	t_max = 0;
-	while (k--)
-	{
-		t_max = (tiles[k].height < tiles[k].width) ?
-			tiles[k].width : tiles[k].height;
-		if (max < t_max) 
-			max = t_max;
-	}
-	return (max);
-}
+#endif

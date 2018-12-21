@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:18:36 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 18:08:16 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 13:51:28 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ typedef struct	s_map
 }				t_map;
 
 int				n_bits_on(unsigned short v);
+int				get_width_max(t_tile *tiles, int k);
 
 #endif

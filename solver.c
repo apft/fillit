@@ -6,13 +6,12 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:11:19 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 13:35:40 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 13:55:20 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "utils.h"
-#include "libft.h"
+#include "output.h"
 #include "dbg_utils.h"
 
 static int	add_tile(t_map *map, t_tile *tile)
@@ -63,58 +62,6 @@ static void	move_tile(int n, t_tile *tile)
 	}
 }
 
-static char	*init_str(int n)
-{
-	char	*str;
-	int		i;
-	int		l;
-
-	l = n * (n + 1);
-	str = (char *)malloc(sizeof(*str) * (l + 1));
-	if (!str)
-		return (0);
-	i = -1;
-	while (++i < l)
-	{
-		if (i > 0 && (i + 1) % (n + 1) == 0)
-			*(str + i) = '\n';
-		else
-			*(str + i) = '.';
-	}
-	*(str + i) = 0;
-	return (str);
-}
-
-static int	set_char(char *str, t_tile *tile, int i, t_map *map)
-{
-	int		h;
-	int		x;
-	int		y;
-	int		start;
-	int		j;
-	unsigned short	mask;
-
-	x = tile->x;
-	y = tile->y;
-	if (!str)
-		return (0);
-	h = 0;
-	while (h < tile->height)
-	{
-		start = x + (y + h) * (map->n + 1);
-		j = 0;
-		mask = 1 << (sizeof(mask) * 8 - 1);
-		while (j < 4)
-		{
-			if (tile->lines[h] & (mask >> j))
-				*(str + start + j) = 'A' + i;
-			j++;
-		}
-		h++;
-	}
-	return (1);
-}
-
 static int	fillit(t_map *map, t_tile *tiles, int k, int i)
 {
 	static char		*out;
@@ -139,28 +86,9 @@ static int	fillit(t_map *map, t_tile *tiles, int k, int i)
 		}
 		if (fill)
 			remove_tile(map, &tiles[i]);
-		if (i == 0)
-			return (0);
 		move_tile(map->n, &tiles[i]);
 	}
 	return (0);
-}
-
-static int	get_width_max(t_tile *tiles, int k)
-{
-	int		max;
-	int		t_max;
-
-	max = 0;
-	t_max = 0;
-	while (k--)
-	{
-		t_max = (tiles[k].height < tiles[k].width) ?
-			tiles[k].width : tiles[k].height;
-		if (max < t_max) 
-			max = t_max;
-	}
-	return (max);
 }
 
 int			solver(t_tile *tiles, int k)
