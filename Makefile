@@ -6,7 +6,7 @@
 #    By: apion <apion@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/01 14:28:41 by apion             #+#    #+#              #
-#    Updated: 2018/12/21 15:46:26 by apion            ###   ########.fr        #
+#    Updated: 2018/12/21 17:46:30 by apion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,6 @@ LIBFT			= $(LIBFT_PATH)/libft.a
 NAME			= fillit
 C_DIR			=
 H_DIR			=
-ifdef DEBUG
-H_DIR			+= $(LIBFT_PATH)
-endif
 D_DIR			= .dep
 O_DIR			= .obj
 C_FILES			:= main.c \
@@ -34,9 +31,6 @@ C_FILES			:= main.c \
 					parser.c \
 					solver.c \
 					utils.c
-ifdef DEBUG
-C_FILES			+= dbg_utils.c
-endif
 O_FILES			:= $(C_FILES:%.c=%.o)
 D_FILES			:= $(C_FILES:%.c=%.d)
 
@@ -50,15 +44,8 @@ all: $(NAME)
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
-ifdef DEBUG
-$(NAME): $(LIBFT)
-endif
 $(NAME): $(addprefix $(O_DIR)/, $(O_FILES))
-ifdef DEBUG
-	$(CC) $(CFLAGS) $(CINCLUDES) -o $@ $^ -L$(LIBFT_PATH) -lft
-else
 	$(CC) $(CFLAGS) $(CINCLUDES) -o $@ $^
-endif
 
 $(O_DIR)/%.o: %.c
 $(O_DIR)/%.o: %.c $(D_DIR)/%.d | $(O_DIR) $(D_DIR)

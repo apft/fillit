@@ -6,14 +6,14 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:07:55 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 14:51:11 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 18:38:09 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define MAP_MAX 545 // 26*5*4 + (26-1)
+# define MAP_MAX 545
 # define SIZE 550
 
 # include "utils.h"

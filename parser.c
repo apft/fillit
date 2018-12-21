@@ -6,13 +6,14 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 17:01:30 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 19:03:17 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "utils.h"
 #include "parser.h"
+#include "errors.h"
 
 unsigned short	g_tiles[] =
 {
@@ -94,7 +95,7 @@ static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
 		if ((tmp << (get_left_col(tmp) + 4 * get_top_row(tmp))) == g_tiles[i])
 			return (create_tile(tetrimino, g_tiles[i]));
 	}
-	return (1);
+	return (ERR_TILE);
 }
 
 int			parser(t_tile *tiles, int *k, const int fd)
@@ -106,7 +107,7 @@ int			parser(t_tile *tiles, int *k, const int fd)
 	unsigned short	tmp;
 
 	if ((r = read(fd, buf, SIZE)) < 0 || r > MAP_MAX)
-		return (-1);
+		return (r > MAP_MAX ? ERR_FILE_SIZE : ERR_READ);
 	tmp = 0;
 	err = 0;
 	i = -1;
@@ -115,13 +116,13 @@ int			parser(t_tile *tiles, int *k, const int fd)
 		if (i > 0 && i % 21 == 0 && !(err = extract_tile(tmp, &tiles[(*k)++])))
 			tmp = 0;
 		if (i % 21 < 20 && ((i - *k) % 5) < 4 && buf[i] != '.' && buf[i] != '#')
-			return (2);
+			return (ERR_CHAR);
 		else if (i % 21 < 20 && ((i - *k) % 5) < 4 && buf[i] == '#')
 			tmp ^= 1 << (15 - (i % 21) + ((i % 21) / 5));
 		if (i % 21 < 20 && ((i - *k) % 5) == 4 && buf[i] != '\n')
-			return (3);
+			return (ERR_FILE);
 		if (i % 21 == 20 && buf[i] != '\n')
-			return (4);
+			return (ERR_FILE_SIZE);
 	}
 	return (err || i < 20 || !(r % 21) || extract_tile(tmp, &tiles[(*k)++]));
 }

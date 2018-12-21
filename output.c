@@ -6,18 +6,24 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:47:48 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:00:21 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 18:37:32 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "utils.h"
 
-char	*init_str(int n)
+static void	print_solution(char *str)
 {
-	char	*str;
+	print_str(str);
+	free((void *)str);
+}
+
+char		*init_str(int n)
+{
 	int		i;
 	int		l;
+	char	*str;
 
 	l = n * (n + 1);
 	str = (char *)malloc(sizeof(*str) * (l + 1));
@@ -26,7 +32,7 @@ char	*init_str(int n)
 	i = -1;
 	while (++i < l)
 	{
-		if (i > 0 && (i + 1) % (n + 1) == 0)
+		if (i && (i + 1) % (n + 1) == 0)
 			*(str + i) = '\n';
 		else
 			*(str + i) = '.';
@@ -35,7 +41,7 @@ char	*init_str(int n)
 	return (str);
 }
 
-int		set_char(char *str, t_tile *tile, int i, t_map *map)
+int			set_char(char *str, t_tile *tile, int i, t_map *map)
 {
 	int				start;
 	int				j;
@@ -50,15 +56,11 @@ int		set_char(char *str, t_tile *tile, int i, t_map *map)
 		start = tile->x + (tile->y + h) * (map->n + 1);
 		j = -1;
 		mask = 1 << (sizeof(mask) * 8 - 1);
-		while (++j < 4)
+		while (++j < tile->width)
 			if (tile->lines[h] & (mask >> j))
 				*(str + start + j) = 'A' + i;
 	}
+	if (i == 0)
+		print_solution(str);
 	return (1);
-}
-
-void	print_solution(const char *str)
-{
-	print_str(str);	
-	free((void *)str);
 }
