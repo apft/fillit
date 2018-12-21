@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:38:32 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 18:51:13 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int		main(int ac, char **av)
 	if (fd < 0)
 		return (-1);
 	ret = parser(tiles, &k, fd);
-	dbg_print_nbr("ret", ret);
-	if (ret == 0)
-		dbg_print_tiles(tiles, k);
-	fillit(tiles, &map, k);
-	free(map.str);
+	//dbg_print_nbr("ret", ret);
+	//if (ret == 0)
+	//	dbg_print_tiles(tiles, k);
+	if (fillit(tiles, &map, k) == -1)
+		ft_putendl("Map str allocation failed");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jkettani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:21:27 by jkettani          #+#    #+#             */
-/*   Updated: 2018/12/21 15:17:07 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 18:50:06 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ typedef struct			s_map{
 	char				*str;
 }						t_map;
 
-void	fillit(t_tile *tiles, t_map *map, int nb_tiles);
+int		fillit(t_tile *tiles, t_map *map, int nb_tiles);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: jkettani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:21:15 by jkettani          #+#    #+#             */
-/*   Updated: 2018/12/21 17:09:38 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 18:48:02 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,7 @@
 #include "libft.h"
 #include "dbg_utils.h"
 
-void	place_tile(t_tile *tile, t_map *map)
-{
-	int		i;
-
-	i = -1;
-	while (++i < tile->height)
-		(map->lines)[tile->row + i] |= (tile->lines)[i] >> tile->col;
-}
-
-void	remove_tile(t_tile *tile, t_map *map)
+void	toggle_tile(t_tile *tile, t_map *map)
 {
 	int		i;
 
@@ -65,13 +56,14 @@ int		fill_str_map(t_map *map, t_tile *tile, unsigned int t)
 	return (1);
 }
 
-void	init_str_map(t_map *map)
+int		init_str_map(t_map *map)
 {
 	int		len;
 	int		i;
 
 	len = map->size * (map->size + 1);
-	map->str = (char *)malloc(sizeof(char) * (len + 1));
+	if(!(map->str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (-1);
 	(map->str)[len] = 0;
 	i = -1;
 	while (++i < len)
@@ -81,15 +73,15 @@ void	init_str_map(t_map *map)
 		else
 			map->str[i] = '.';
 	}
+	return (1);
 }
 
 int		solver(t_tile *tiles, int t, t_map *map, int nb_tiles)
 {
+	int		ret;
+
 	if (t == nb_tiles)
-	{
-		init_str_map(map);
-		return (1);
-	}
+		return (init_str_map(map));
 	tiles[t].row = 0;
 	while (tiles[t].row + tiles[t].height <= map->size)
 	{
@@ -98,11 +90,10 @@ int		solver(t_tile *tiles, int t, t_map *map, int nb_tiles)
 		{
 			if (check_fit(&tiles[t], map))
 			{
-				place_tile(&tiles[t], map);
-				if (solver(tiles, t + 1, map, nb_tiles))
-					return (fill_str_map(map, &tiles[t], t));
-				else
-					remove_tile(&tiles[t], map);
+				toggle_tile(&tiles[t], map);
+				if ((ret = solver(tiles, t + 1, map, nb_tiles)))
+					return ((ret != -1) ? fill_str_map(map, &tiles[t], t) : -1);
+				toggle_tile(&tiles[t], map);
 			}
 			++tiles[t].col;
 		}
@@ -121,14 +112,16 @@ int		get_min_map_size(int nb_tiles)
 	return (size);
 }
 
-void	fillit(t_tile *tiles, t_map *map, int nb_tiles)
+int		fillit(t_tile *tiles, t_map *map, int nb_tiles)
 {
+	int		ret;
+
 	map->size = get_min_map_size(nb_tiles);
-	while (!solver(tiles, 0, map, nb_tiles))
-	{
-		dbg_print_nbr("map size", map->size);
+	while (!(ret = solver(tiles, 0, map, nb_tiles)))
 		map->size++;
-	}
-	dbg_print_nbr("map size", map->size);
+	if (ret == -1)
+		return (-1);
 	ft_putstr(map->str);
+	free(map->str);
+	return (1);
 }
