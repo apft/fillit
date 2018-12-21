@@ -6,13 +6,14 @@
 /*   By: jkettani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:21:15 by jkettani          #+#    #+#             */
-/*   Updated: 2018/12/21 15:16:52 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 17:09:38 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "solver.h"
-# include <stdlib.h>
-# include "libft.h"
+#include "solver.h"
+#include <stdlib.h>
+#include "libft.h"
+#include "dbg_utils.h"
 
 void	place_tile(t_tile *tile, t_map *map)
 {
@@ -45,15 +46,6 @@ int		check_fit(t_tile *tile, t_map *map)
 	return (ret);
 }
 
-void	add_newlines(t_map *map)
-{
-	int	i;
-
-	i = 1;
-	while ((i *= 4) < map->size * (map->size + 1))
-		map->str[i++] = '\n';
-}
-
 int		fill_str_map(t_map *map, t_tile *tile, unsigned int t)
 {
 	int				line;
@@ -67,30 +59,42 @@ int		fill_str_map(t_map *map, t_tile *tile, unsigned int t)
 		mask = 1 << 15;
 		while (++col < tile->width)
 			if (mask >> col & (tile->lines)[line])
-				(map->str)[(map->size + 1) * (tile->row + line) + tile->col + col]
-					= t + 'A';
+				(map->str)[(map->size + 1) * (tile->row + line) +
+					tile->col + col] = t + 'A';
 	}
 	return (1);
 }
 
-void	create_str_map(t_map *map)
+void	init_str_map(t_map *map)
 {
-	map->str = (char *)malloc(sizeof(*(map->str)) * map->size * (map->size + 1));
-	add_newlines(map);
+	int		len;
+	int		i;
+
+	len = map->size * (map->size + 1);
+	map->str = (char *)malloc(sizeof(char) * (len + 1));
+	(map->str)[len] = 0;
+	i = -1;
+	while (++i < len)
+	{
+		if (!((i + 1) % (map->size + 1)))
+			map->str[i] = '\n';
+		else
+			map->str[i] = '.';
+	}
 }
 
 int		solver(t_tile *tiles, int t, t_map *map, int nb_tiles)
 {
 	if (t == nb_tiles)
 	{
-		create_str_map(map);
+		init_str_map(map);
 		return (1);
 	}
 	tiles[t].row = 0;
-	while (tiles[t].row + tiles[t].height < map->size)
+	while (tiles[t].row + tiles[t].height <= map->size)
 	{
 		tiles[t].col = 0;
-		while (tiles[t].col + tiles[t].width < map->size)
+		while (tiles[t].col + tiles[t].width <= map->size)
 		{
 			if (check_fit(&tiles[t], map))
 			{
@@ -121,6 +125,10 @@ void	fillit(t_tile *tiles, t_map *map, int nb_tiles)
 {
 	map->size = get_min_map_size(nb_tiles);
 	while (!solver(tiles, 0, map, nb_tiles))
-		++(map->size);
+	{
+		dbg_print_nbr("map size", map->size);
+		map->size++;
+	}
+	dbg_print_nbr("map size", map->size);
 	ft_putstr(map->str);
 }

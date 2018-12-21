@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:20:30 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 15:52:45 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 15:54:27 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	dbg_print_bin(const unsigned short n)
 
 void	dbg_print_tiles(const t_tile *tiles, const int k)
 {
-	char	i;
-	char	j;
+	int		i;
+	int		j;
 
 	i = -1;
 	while (++i < k)
@@ -63,4 +63,29 @@ void	dbg_print_tiles(const t_tile *tiles, const int k)
 		dbg_print_nbr("Height", tiles[i].height);
 		dbg_print_nbr("Width", tiles[i].width);
 	}
+}
+
+void	dbg_print_map(unsigned short *lines)
+{
+	int i;
+
+	ft_putstr("====== ");
+	ft_putstr("MAP");
+	ft_putstr("======");
+	ft_putendl(0);
+	i = -1;
+	while (++i < 16)
+	{
+		print_bits(lines[i]);
+		ft_putendl(0);
+	}
+}
+
+void	dbg_print_str_map(char *str)
+{
+	ft_putstr("==== ");
+	ft_putstr("STR MAP");
+	ft_putstr("====");
+	ft_putendl(0);
+	ft_putstr(str);
 }

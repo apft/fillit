@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:03:28 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 15:38:32 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		main(int ac, char **av)
 	dbg_print_nbr("ret", ret);
 	if (ret == 0)
 		dbg_print_tiles(tiles, k);
-	fillit(&tiles, &map, k);
+	fillit(tiles, &map, k);
+	free(map.str);
 	return (0);
 }

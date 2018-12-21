@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:26:20 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 15:34:34 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,28 @@ static int	get_top_row(unsigned short v)
 	return (-1);
 }
 
-static int	create_tile(t_tile *tetri, unsigned short tile)
+static int	create_tile(t_tile *tile, unsigned short tile_ref)
 {
-	short	i;
+	int		i;
 
-	tetri->width = 0;
-	tetri->height = 0;
+	tile->width = 0;
+	tile->height = 0;
 	i = -1;
 	while (++i < 4)
 	{
-		tetrimino->lines[i] = ((tile << (4 * i)) >> 12) << 12;
-		tetrimino->height += (tetrimino->lines[i] != 0);
-		tetrimino->width |= tetrimino->lines[i];
+		tile->lines[i] = ((tile_ref << (4 * i)) >> 12) << 12;
+		tile->height += (tile->lines[i] != 0);
+		tile->width |= tile->lines[i];
 	}
-	tetrimino->width = active_bit(tetrimino->width);
+	tile->width = active_bit(tile->width);
 	return (0);
 }
 
 
-static int	extract_tile(unsigned short tmp, t_tile *tetri)
+static int	extract_tile(unsigned short tmp, t_tile *tile)
 {
-	char			i;
-	char			j;
-	unsigned short	tile;
-	unsigned short	shift;
-	unsigned short	tiles[] =
+	int				i;
+	unsigned short	tiles_ref[] =
 	{
 		0b1000100010001000,
 		0b1111000000000000,
@@ -107,8 +104,8 @@ static int	extract_tile(unsigned short tmp, t_tile *tetri)
 	i = -1;
 	while (++i < 19)
 	{
-		if ((tmp << (get_left_col(tmp) + 4 * get_top_row(tmp))) == tiles[i])
-			return (create_tile(tetri, tiles[i]));
+		if ((tmp << (get_left_col(tmp) + 4 * get_top_row(tmp))) == tiles_ref[i])
+			return (create_tile(tile, tiles_ref[i]));
 	}
 	return (1);
 }
