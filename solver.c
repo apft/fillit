@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:11:19 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 13:55:20 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 15:16:22 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	fillit(t_map *map, t_tile *tiles, int k, int i)
 		{
 			set_char(out, &tiles[i], i, map);
 			if (i == 0)
-				ft_putstr(out);
+				print_solution(out);
 			return (1);
 		}
 		if (fill)
@@ -97,7 +97,6 @@ int			solver(t_tile *tiles, int k)
 	int				fill;
 
 	map.n = get_width_max(tiles, k);
-	dbg_print_nbr("k", k);
 	while (map.n * map.n < 4 * k)
 		map.n++;
 	while (!(fill = fillit(&map, tiles, k, 0)))

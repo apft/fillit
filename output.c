@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:47:48 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 13:59:20 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 15:00:21 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,28 @@ char	*init_str(int n)
 
 int		set_char(char *str, t_tile *tile, int i, t_map *map)
 {
-	int		h;
-	int		x;
-	int		y;
-	int		start;
-	int		j;
+	int				start;
+	int				j;
+	int				h;
 	unsigned short	mask;
 
-	x = tile->x;
-	y = tile->y;
 	if (!str)
 		return (0);
-	h = 0;
-	while (h < tile->height)
+	h = -1;
+	while (++h < tile->height)
 	{
-		start = x + (y + h) * (map->n + 1);
-		j = 0;
+		start = tile->x + (tile->y + h) * (map->n + 1);
+		j = -1;
 		mask = 1 << (sizeof(mask) * 8 - 1);
-		while (j < 4)
-		{
+		while (++j < 4)
 			if (tile->lines[h] & (mask >> j))
 				*(str + start + j) = 'A' + i;
-			j++;
-		}
-		h++;
 	}
 	return (1);
+}
+
+void	print_solution(const char *str)
+{
+	print_str(str);	
+	free((void *)str);
 }
