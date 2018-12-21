@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:11:19 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:16:22 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 15:26:54 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ int			solver(t_tile *tiles, int k)
 	while (map.n * map.n < 4 * k)
 		map.n++;
 	while (!(fill = fillit(&map, tiles, k, 0)))
-	{
-		dbg_print_nbr("n", map.n);
 		map.n++;
-	}
 	return (0);
 }
