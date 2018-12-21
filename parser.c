@@ -6,14 +6,13 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:50:34 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 17:01:30 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "utils.h"
 #include "parser.h"
-#include "dbg_utils.h"
 
 unsigned short	g_tiles[] =
 {

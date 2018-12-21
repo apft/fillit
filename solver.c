@@ -6,13 +6,12 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:11:19 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:52:18 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 17:01:51 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "output.h"
-#include "dbg_utils.h"
 
 static int	add_tile(t_map *map, t_tile *tile)
 {

@@ -6,14 +6,13 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:19:11 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 17:01:13 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "parser.h"
 #include "solver.h"
-#include "dbg_utils.h"
 
 static int	print_usage(void)
 {
