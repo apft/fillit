@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:11:19 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:26:54 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 15:52:18 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	add_tile(t_map *map, t_tile *tile)
 	{
 		h = tile->height;
 		while (h--)
-			map->lines[h + y] |= (tile->lines[h] >> x);
+			map->lines[y + h] |= (tile->lines[h] >> x);
 	}
 	return (!err);
 }
@@ -48,7 +48,7 @@ static void	remove_tile(t_map *map, t_tile *tile)
 	x = tile->x;
 	y = tile->y;
 	while (h--)
-		map->lines[h + y] ^= (tile->lines[h] >> x);
+		map->lines[y + h] ^= (tile->lines[h] >> x);
 }
 
 static void	move_tile(int n, t_tile *tile)
@@ -66,7 +66,6 @@ static int	fillit(t_map *map, t_tile *tiles, int k, int i)
 {
 	static char		*out;
 	int				fill;
-	int				y;
 
 	if (i == k)
 	{

@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 14:51:17 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 15:50:34 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ static int	create_tile(t_tile *tetrimino, unsigned short tile)
 
 static int	extract_tile(unsigned short tmp, t_tile *tetrimino)
 {
-	char			i;
-	char			j;
-	unsigned short	tile;
-	unsigned short	shift;
+	int			i;
 
 	if (!tmp || n_bits_on(tmp) != 4)
 		return (1);

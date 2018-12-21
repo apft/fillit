@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:20:30 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 14:41:16 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/21 15:52:48 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	dbg_print_tile(const t_tile *tile, const int i)
 
 void	dbg_print_tiles(const t_tile *tiles, const int k)
 {
-	char	i;
-	char	j;
+	int		i;
+	int		j;
 
 	i = -1;
 	while (++i < k)
