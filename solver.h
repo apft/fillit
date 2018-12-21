@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   solver.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jkettani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 18:18:36 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 15:05:58 by jkettani         ###   ########.fr       */
+/*   Created: 2018/12/21 13:21:27 by jkettani          #+#    #+#             */
+/*   Updated: 2018/12/21 15:17:07 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef SOLVER_H
+# define SOLVER_H
+# include "utils.h"
 
-typedef struct	s_tile
-{
-	unsigned short	lines[4];
-	int				width;
-	int				height;
-	int				col;
-	int				row;
-}				t_tile;
+typedef struct			s_map{
+	unsigned short		lines[16];
+	int					size;
+	char				*str;
+}						t_map;
 
-#endif
+void	fillit(t_tile *tiles, t_map *map, int nb_tiles);
+
+# endif

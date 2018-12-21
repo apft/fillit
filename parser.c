@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 17:49:32 by apion             #+#    #+#             */
-/*   Updated: 2018/12/20 15:53:14 by jkettani         ###   ########.fr       */
+/*   Updated: 2018/12/21 15:20:23 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	active_bit(unsigned short v)
 	c = 0;
 	while (v)
 	{
-		v &= v - 1; c++;
+		v &= v - 1;
+		c++;
 	}
 	return (c);
 }
