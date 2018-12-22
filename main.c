@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/22 11:25:42 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 11:36:51 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 #include "solver.h"
 #include "errors.h"
 
-static int	print_usage(void)
+static int	print_usage(char *exec)
 {
-	print_str("usage:\tfillit file\n");
+	print_str("usage:\t");
+	print_str(exec);
+	print_str(" file\n");
 	return (-1);
 }
 
-static int	print_err(int err)
+static int	print_err(int err, int flag)
 {
+	if (!ERR_ACTIVE)
+	{
+		print_str("error\n");
+		return (-1);
+	}
 	if (err == ERR_TILE)
 		print_str("error: invalid tetrimino\n");
 	else if (err == ERR_CHAR)
@@ -52,7 +59,7 @@ int			main(int ac, char **av)
 	int		err;
 
 	if (ac != 2)
-		return (print_usage());
+		return (print_usage(av[0]));
 	k = 0;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
