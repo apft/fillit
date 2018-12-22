@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 17:01:13 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 10:22:41 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 #include "parser.h"
 #include "solver.h"
 
-static int	print_usage(void)
+static int	print_usage(char *exec)
 {
-	print_str("usage:\tfillit file\n");
+	print_str("usage:\t");
+	print_str(exec);
+	print_str(" file\n");
 	return (-1);
 }
 
@@ -47,7 +49,7 @@ int		main(int ac, char **av)
 	int		err;
 
 	if (ac != 2)
-		return (print_usage());
+		return (print_usage(av[0]));
 	k = 0;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
