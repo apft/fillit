@@ -6,13 +6,14 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 18:50:47 by apion             #+#    #+#             */
-/*   Updated: 2018/12/22 11:26:01 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 11:37:05 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	ERRORS_H
 # define ERRORS_H
 
+# define ERR_ACTIVE 0
 # define ERR_OPEN 1
 # define ERR_CLOSE 8
 # define ERR_READ 2

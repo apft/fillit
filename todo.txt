@@ -1,6 +1,7 @@
 TO DO:
 
-- print Usage
-- print error message :
+- CLOSE FD !
+X - print Usage
+X - print error message :
 	--> "Could not read ..."
 
