@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 19:01:11 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 11:25:42 by apion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static int	print_err(int err)
 		print_str("error: invalid file (too long)\n");
 	else if (err == ERR_OPEN)
 		print_str("error: could not open file\n");
+	else if (err == ERR_CLOSE)
+		print_str("error: could not close file\n");
 	else if (err == ERR_READ)
 		print_str("error: could not read from file\n");
 	else if (err == ERR_MALLOC)
@@ -60,5 +62,7 @@ int			main(int ac, char **av)
 		return (print_err(err));
 	if ((err = solver(tiles, k)) != 1)
 		print_err(err);
+	if (close(fd) == -1)
+		print_err(ERR_CLOSE);
 	return (0);
 }
