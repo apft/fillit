@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:11:19 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 19:02:02 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 12:39:11 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ static int	fillit(t_map *map, t_tile *tiles, int k, int i)
 			if (check_tile(map, &tiles[i]))
 			{
 				toggle_tile(map, &tiles[i]);
-				if ((ret = fillit(map, tiles, k, i + 1) > 0))
-					return (ret == ERR_MALLOC ? ERR_MALLOC :
-							set_char(out, &tiles[i], i, map));
+				if ((ret = fillit(map, tiles, k, i + 1)) == ERR_MALLOC)
+					return (ERR_MALLOC);
+				else if (ret)
+					return (set_char(out, &tiles[i], i, map));
 				toggle_tile(map, &tiles[i]);
 			}
 			++(tiles[i].x);
@@ -68,7 +69,7 @@ int			solver(t_tile *tiles, int k)
 	int				ret;
 	static t_map	map;
 
-	ret	= 0;
+	ret = 0;
 	map.n = get_width_max(tiles, k);
 	while (map.n * map.n < 4 * k)
 		map.n++;

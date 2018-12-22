@@ -6,11 +6,12 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:36:40 by apion             #+#    #+#             */
-/*   Updated: 2018/12/22 11:43:52 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 12:42:35 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <unistd.h>
 #include "parser.h"
 #include "solver.h"
 #include "errors.h"
@@ -55,19 +56,19 @@ int			main(int ac, char **av)
 {
 	int		fd;
 	t_tile	tiles[26];
-	int		k;
+	int		nb_tiles;
 	int		err;
 
 	if (ac != 2)
 		return (print_usage(av[0]));
-	k = 0;
+	nb_tiles = 0;
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		return (print_err(ERR_OPEN));
-	err = parser(tiles, &k, fd);
+	err = parser(tiles, &nb_tiles, fd);
 	if (err)
 		return (print_err(err));
-	if ((err = solver(tiles, k)) != 1)
+	if ((err = solver(tiles, nb_tiles)) != 1)
 		print_err(err);
 	if (close(fd) == -1)
 		print_err(ERR_CLOSE);

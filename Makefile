@@ -6,7 +6,7 @@
 #    By: apion <apion@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/01 14:28:41 by apion             #+#    #+#              #
-#    Updated: 2018/12/21 17:46:30 by apion            ###   ########.fr        #
+#    Updated: 2018/12/22 12:07:17 by jkettani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,9 @@ CFLAGS			:= -Wall -Wextra -Werror
 CINCLUDES		= $(addprefix -I,$(H_DIR))
 CPPFLAGS		= -MMD -MP -MF $(D_DIR)/$*.d
 
-LIBFT_PATH		= libft
-LIBFT			= $(LIBFT_PATH)/libft.a
-
 NAME			= fillit
-C_DIR			=
-H_DIR			=
+C_DIR			= .
+H_DIR			= .
 D_DIR			= .dep
 O_DIR			= .obj
 C_FILES			:= main.c \
@@ -39,10 +36,6 @@ D_FILES			:= $(C_FILES:%.c=%.d)
 
 .PHONY: all
 all: $(NAME)
-
-.PHONY: $(LIBFT)
-$(LIBFT):
-	make -C $(LIBFT_PATH)
 
 $(NAME): $(addprefix $(O_DIR)/, $(O_FILES))
 	$(CC) $(CFLAGS) $(CINCLUDES) -o $@ $^

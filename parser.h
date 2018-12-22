@@ -6,7 +6,7 @@
 /*   By: apion <apion@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:07:55 by apion             #+#    #+#             */
-/*   Updated: 2018/12/21 18:38:09 by apion            ###   ########.fr       */
+/*   Updated: 2018/12/22 12:58:10 by jkettani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 # define SIZE 550
 
 # include "utils.h"
-
-typedef struct	s_parser
-{
-	unsigned short	tile;
-	unsigned short	shift;
-}				t_parser;
 
 int				parser(t_tile *tiles, int *k, const int fd);
 
